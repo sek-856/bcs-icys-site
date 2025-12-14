@@ -48,6 +48,7 @@
     *{box-sizing:border-box}
     html,body{
       height:100%;
+      overflow-x: hidden;
       overflow-x: clip;
     }
 
@@ -69,7 +70,6 @@
     }
 
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
 
     /* Better scroll offset: only sections */
     section[id]{ scroll-margin-top: var(--header-offset); }
@@ -424,6 +424,94 @@
     .footerGrid{display:grid; gap:14px;}
     .small{font-size:12px; color:rgba(23,24,27,.62);}
 
+    /* About section */
+    .aboutWrap{ overflow:hidden; }
+    
+    .aboutGrid{
+      display:grid;
+      gap:14px;
+      padding:14px;
+    }
+    
+    .aboutPhoto{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(20,20,25,.10);
+      background:#fff;
+      box-shadow:0 10px 26px rgba(16,24,40,.10);
+      min-height:240px;
+    }
+    
+    .aboutPhoto img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    
+    .aboutCard{ padding:16px; }
+    
+    .aboutTop{
+      display:grid;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    
+    .aboutName{
+      font-family:Fraunces, ui-serif, Georgia, serif;
+      font-weight:650;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+    
+    .aboutMeta{
+      color:rgba(23,24,27,.72);
+      font-weight:700;
+      font-size:13px;
+      margin-top:2px;
+    }
+    
+    .aboutBadges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    
+    .aboutCopy{
+      margin:10px 0 0;
+      color:rgba(23,24,27,.74);
+      font-size:14px;
+      line-height:1.55;
+    }
+    
+    .aboutCtas{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+    
+    .aboutFinePrint{ margin-top:10px; }
+    
+    /* Tablet+ */
+    @media (min-width: 620px){
+      .aboutGrid{
+        grid-template-columns: 1fr 1.15fr;
+        align-items: stretch;
+      }
+      .aboutPhoto{ min-height:320px; }
+    }
+    
+    /* Desktop */
+    @media (min-width: 860px){
+      .aboutGrid{
+        grid-template-columns: .95fr 1.05fr;
+        gap:18px;
+        padding:18px;
+      }
+      .aboutCard{ padding:18px; }
+      .aboutName{ font-size:24px; }
+    }
+    
     /* Responsive */
     @media (min-width: 860px){
       .links{display:flex}
