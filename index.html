@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BC's ICYs — Locally Made Artisanal Italian Ices</title>
+  <meta name="description" content="BC's ICYs — non-dairy, low-sugar, handcrafted Italian ices made with fresh seasonal ingredients. Farmers markets, pop-ups, festivals, and catering." />
+
+  <!-- Optional fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Layout */
+      --max: 1120px;
+      --header-offset: 88px;
+
+      /* Logo-anchored brand colors */
+      --brand-blue: #2E6FA3;     /* pulled from logo text */
+      --brand-orange: #F26A3D;   /* sun rays / CTA */
+      --brand-red: #E24C3B;      /* subtle warmth */
+
+      /* Supporting fruit tones */
+      --lemon: #F5D76A;
+      --pear: #E9F0C9;
+
+      /* Extra tokens referenced in UI */
+      --citrus: var(--brand-orange);
+      --strawberry: var(--brand-red);
+
+      /* Neutrals (warmer + cleaner) */
+      --ink: #1C1D21;
+      --muted: #5F6673;
+      --bg: #FDFCF9;
+      --panel: rgba(255,255,255,.88);
+      --border: rgba(20,20,25,.10);
+
+      --radius-lg: 22px;
+      --radius-md: 16px;
+
+      --shadow-sm: 0 12px 30px rgba(20,30,60,.10);
+      --shadow-xs: 0 6px 18px rgba(20,30,60,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+
+    body{
+      margin:0;
+      font-family:Inter, system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Better scroll offset: only sections */
+    section[id]{ scroll-margin-top: var(--header-offset); }
+
+    /* Focus styles */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+      outline: 3px solid rgba(46,111,163,.35);
+      outline-offset: 3px;
+      border-radius: 14px;
+    }
+
+    .page{position:relative;isolation:isolate}
+    .page::before{
+      content:"";
+      position:absolute;
+      inset:-240px -240px auto -240px;
+      height:900px;
+      z-index:-2;
+      background:
+        radial-gradient(520px 420px at 18% 20%, rgba(46,111,163,.18), transparent 60%),
+        radial-gradient(520px 420px at 72% 18%, rgba(242,106,61,.14), transparent 60%),
+        radial-gradient(520px 420px at 30% 70%, rgba(245,215,106,.16), transparent 60%);
+      filter: blur(2px);
+    }
+
+    .grain{
+      position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      mix-blend-mode:multiply;
+    }
+
+    .container{width:min(100% - 40px, var(--max)); margin-inline:auto;}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(20,20,25,.06);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:8px 0; gap:14px;
+    }
+
+    .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
+    /* Wordmark: size by HEIGHT, keep width automatic */
+    .brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width: unset; /* important */
+}
+
+    /* Wordmark should NOT be forced into a box */
+    .brandLogo{
+      height: 56px;     /* key: size by height */
+      width: auto;
+      display:block;
+      object-fit: contain;
+
+      /* remove “boxed” look */
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    /* Desktop: give it more presence than the nav */
+    @media (min-width: 860px){
+      .brandLogo{
+        height: 68px;
+      }
+    }
+
+    .brandTitle{
+      font-family:Fraunces, ui-serif, Georgia, serif;
+      font-weight:600;
+      letter-spacing:.2px;
+      font-size:14px;
+      line-height:1.1;
+    }
+    .brandSub{font-size:10px;color:var(--muted);margin-top:2px}
+
+    .links{
+      display:none;
+      gap:18px;
+      font-weight:600;
+      font-size:14px;
+      color:rgba(23,24,27,.72);
+      align-items:center;
+    }
+    .links a{padding:10px 10px; border-radius:12px;}
+    .links a:hover{ color: var(--brand-blue); }
+
+    .actions{display:flex; align-items:center; gap:10px;}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:11px 14px; border-radius:999px;
+      font-weight:700; font-size:14px;
+      border:1px solid rgba(20,20,25,.12);
+      background:rgba(255,255,255,.72);
+      box-shadow:0 8px 18px rgba(16,24,40,.06);
+      transition:transform .15s ease, box-shadow .15s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 24px rgba(16,24,40,.10);}
+    .btn.primary{
+      background: linear-gradient(135deg, var(--brand-orange), var(--brand-red));
+      color: #fff;
+      border-color: rgba(255,255,255,.20);
+    }
+    .btn .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 0 0 3px rgba(255,255,255,.22);
+    }
+
+    .menu-toggle{
+      width:42px;height:42px;border-radius:999px;
+      border:1px solid rgba(20,20,25,.12);
+      background:rgba(255,255,255,.75);
+      display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer;
+    }
+
+    .mobile-drawer{
+      display:none;
+      border-top:1px solid rgba(20,20,25,.08);
+      background:rgba(255,255,255,.65);
+      backdrop-filter:blur(10px);
+    }
+    .mobile-drawer.is-open{ display:block; }
+
+    .mobile-drawer .inner{padding:12px 0 16px; display:grid; gap:10px;}
+    .mobile-drawer a{
+      padding:12px 14px; border-radius:14px;
+      border:1px solid rgba(20,20,25,.08);
+      background:rgba(255,255,255,.70);
+      font-weight:700; font-size:14px;
+    }
+
+    main{padding:26px 0 64px;}
+
+    /* Hero */
+    .hero{display:grid; gap:18px; padding:18px 0 10px; align-items:start;}
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(20,20,25,.12);
+      background:rgba(255,255,255,.72);
+      width:fit-content;
+      box-shadow:0 8px 16px rgba(16,24,40,.06);
+      font-weight:700; font-size:13px;
+      color:rgba(23,24,27,.92);
+    }
+    .badge .pill{
+      width:10px;height:10px;border-radius:999px;
+      background:linear-gradient(135deg,var(--lemon),var(--citrus));
+      box-shadow:0 0 0 3px rgba(242,200,75,.18);
+    }
+
+    h1{
+      margin:0;
+      font-family:Fraunces, ui-serif, Georgia, serif;
+      font-weight:600;
+      font-size:clamp(34px, 5.2vw, 56px);
+      line-height:1.08;
+      letter-spacing:.2px;
+    }
+    .lead{
+      margin:0;
+      color:rgba(23,24,27,.76);
+      font-size:16px;
+      max-width:56ch;
+    }
+    .hero-cta{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;}
+
+    .panel{
+      background:var(--panel);
+      border:1px solid rgba(20,20,25,.10);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-sm);
+      overflow:hidden;
+    }
+
+    /* Hero media with photo + overlay */
+    .heroMedia{
+      position:relative;
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(20,20,25,.10);
+      overflow:hidden;
+      box-shadow:var(--shadow-sm);
+      background:#fff;
+      min-height:320px;
+    }
+    .heroMedia .bg{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(120px 120px at 20% 25%, rgba(255,255,255,.85), rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, rgba(242,106,61,.14), rgba(233,75,90,.10) 45%, rgba(242,200,75,.14));
+      z-index:0;
+    }
+    .heroMedia .photoGrid{
+      position:absolute; inset:0;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1fr 1fr;
+      gap:10px;
+      padding:14px;
+      z-index:1;
+      opacity:.92;
+    }
+    .heroMedia figure{
+      margin:0;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(20,20,25,.10);
+      background:#fff;
+      box-shadow:0 10px 26px rgba(16,24,40,.10);
+    }
+    .heroMedia figure img{
+      width:100%; height:100%;
+      object-fit:cover;
+      aspect-ratio: 1 / 1;
+    }
+    .heroMedia .overlayCard{
+      position:absolute;
+      left:14px; right:14px; bottom:14px;
+      z-index:2;
+      background:rgba(255,255,255,.80);
+      border:1px solid rgba(20,20,25,.10);
+      border-radius:18px;
+      padding:14px 16px;
+      backdrop-filter: blur(8px);
+    }
+    .heroMedia .overlayCard strong{font-weight:800}
+    .heroMedia .overlayCard p{margin:4px 0 0; color:rgba(23,24,27,.72); font-size:13px; line-height:1.35}
+
+    /* Sections */
+    section{padding:34px 0;}
+    .sectionHead{display:flex; justify-content:space-between; align-items:end; gap:14px; margin-bottom:14px;}
+    h2{
+      margin:0;
+      font-family:Fraunces, ui-serif, Georgia, serif;
+      font-size:24px;
+      letter-spacing:.2px;
+      color: var(--brand-blue);
+    }
+    .sub{margin:0; color:var(--muted); font-size:14px; max-width:70ch;}
+
+    /* Flavor grid */
+    .grid{display:grid; gap:14px;}
+    .card{padding:16px;}
+    .rowTop{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px;}
+    .name{font-weight:800; letter-spacing:.1px;}
+    .tag{
+      font-size:12px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(20,20,25,.10);
+      background:rgba(255,255,255,.74);
+      color:rgba(23,24,27,.74);
+      white-space:nowrap;
+    }
+    .swatch{
+      height:10px;border-radius:999px;border:1px solid rgba(20,20,25,.08);
+      background:linear-gradient(90deg, rgba(242,106,61,.68), rgba(233,75,90,.62), rgba(242,200,75,.68));
+    }
+    .card p{margin:10px 0 0; color:rgba(23,24,27,.72); font-size:14px;}
+
+    /* IG gallery */
+    .gallery{
+      display:grid;
+      grid-auto-flow:column;
+      grid-auto-columns: 72%;
+      gap:12px;
+      overflow:auto;
+      padding-bottom:6px;
+      scroll-snap-type:x mandatory;
+    }
+    .gallery::-webkit-scrollbar{height:8px}
+    .gallery::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12); border-radius:999px}
+    .galleryItem{
+      scroll-snap-align:start;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(20,20,25,.10);
+      box-shadow:0 12px 28px rgba(16,24,40,.10);
+      background:#fff;
+      position:relative;
+      min-height:240px;
+    }
+    .galleryItem img{width:100%; height:100%; object-fit:cover;}
+    .galleryItem .cap{
+      position:absolute; left:12px; right:12px; bottom:12px;
+      background:rgba(255,255,255,.80);
+      border:1px solid rgba(20,20,25,.10);
+      border-radius:16px;
+      padding:10px 12px;
+      font-weight:800;
+      font-size:13px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Vote chips */
+    .chips{display:flex; flex-wrap:wrap; gap:10px;}
+    .chip{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(20,20,25,.12);
+      background:rgba(255,255,255,.72);
+      font-weight:800;
+      font-size:13px;
+      cursor:pointer;
+      transition:transform .12s ease;
+    }
+    .chip:hover{transform:translateY(-1px)}
+    .chip input{accent-color: var(--strawberry);}
+
+    /* Forms */
+    label{display:grid; gap:6px; font-size:12px; font-weight:800; color:rgba(23,24,27,.72);}
+    input, select, textarea{
+      padding:12px 12px; border-radius:14px;
+      border:1px solid rgba(20,20,25,.12);
+      background:rgba(255,255,255,.75);
+      font-weight:600;
+      font-family:inherit;
+      font-size:14px;
+      color:var(--ink);
+      outline:none;
+    }
+    textarea{resize:vertical}
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(242,106,61,.45);
+      box-shadow:0 0 0 4px rgba(242,106,61,.10);
+    }
+
+    /* Footer */
+    footer{padding:40px 0 54px;}
+    .footerGrid{display:grid; gap:14px;}
+    .small{font-size:12px; color:rgba(23,24,27,.62);}
+
+    /* Responsive */
+    @media (min-width: 860px){
+      .links{display:flex}
+      .menu-toggle{display:none}
+      .mobile-drawer{display:none !important}
+
+      .hero{grid-template-columns: 1.05fr .95fr; gap:28px; padding:34px 0 12px; align-items:center;}
+      .grid{grid-template-columns: repeat(3, 1fr);}
+      .gallery{grid-auto-columns: 32%;}
+      .footerGrid{grid-template-columns: 1.2fr .8fr .8fr;}
+    }
+    @media (min-width: 620px) and (max-width: 859px){
+      .grid{grid-template-columns: repeat(2, 1fr);}
+      .gallery{grid-auto-columns: 48%;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header>
+      <div class="container">
+        <div class="nav" role="navigation" aria-label="Primary">
+          <a class="brand" href="#top" aria-label="BC's ICYs home">
+            <img class="brandLogo" src="assets/logo.jpg" alt="BC's ICYs — Locally Made Artisanal Italian Ices" />
+          </a>
+
+          <nav class="links" aria-label="Site">
+            <a href="#flavors">Flavors</a>
+            <a href="#catering">Catering</a>
+            <a href="#events">Events</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <div class="actions">
+            <a class="btn" href="#flavors"><span class="dot" aria-hidden="true"></span>Featured Flavors</a>
+            <a class="btn primary" href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">
+              Pre-order via DM
+            </a>
+
+            <button class="menu-toggle" type="button" aria-label="Open menu"
+              aria-expanded="false" aria-controls="mobile-drawer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobile-drawer" class="mobile-drawer" aria-label="Mobile menu">
+          <div class="inner">
+            <a href="#flavors">Flavors</a>
+            <a href="#catering">Catering</a>
+            <a href="#events">Events</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+            <a href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">Instagram (DM)</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="top" class="container">
+      <!-- HERO -->
+      <section class="hero" aria-label="Hero">
+        <div>
+          <div class="badge"><span class="pill" aria-hidden="true"></span>Farmers markets • pop-ups • festivals • catering</div>
+
+          <h1>Locally made artisanal Italian ices—fresh, clean, and chef-driven.</h1>
+          <p class="lead">
+            All our ices are <strong>non-dairy</strong>, <strong>low-sugar</strong>, and handcrafted with fresh, seasonal ingredients.
+            Catch us at markets and events—or bring BC's ICYs to your next gathering.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">
+              <span class="dot" aria-hidden="true"></span>Pre-order pints via DM
+            </a>
+            <a class="btn" href="#catering">Book catering</a>
+            <a class="btn" href="#vote">Vote for next month</a>
+          </div>
+        </div>
+
+        <div class="heroMedia" aria-label="Brand imagery">
+          <div class="bg" aria-hidden="true"></div>
+
+          <!-- Swap these images with your favorites -->
+          <div class="photoGrid" aria-hidden="true">
+            <figure><img src="assets/photo-1.jpg" alt="" /></figure>
+            <figure><img src="assets/photo-2.jpg" alt="" /></figure>
+            <figure><img src="assets/photo-3.jpg" alt="" /></figure>
+            <figure><img src="assets/photo-4.jpg" alt="" /></figure>
+          </div>
+
+          <div class="overlayCard">
+            <div>
+              <strong>This month's featured flavors</strong>
+              <p>
+                Banana Black Sesame • Lemon • Mandarin • Golden Milk • Lychee Coconut • Candied Yam • Pear Vanilla
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLAVORS -->
+      <section id="flavors" aria-label="Featured flavors">
+        <div class="sectionHead">
+          <div>
+            <h2>This month's featured flavors</h2>
+            <p class="sub">
+              Non-dairy • low-sugar • handcrafted with fresh, seasonal ingredients.
+              Which one are you most excited to try?
+            </p>
+          </div>
+          <a class="btn" href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">DM to pre-order pints</a>
+        </div>
+
+        <div class="grid">
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🍌 Banana Black Sesame</div><div class="tag">Featured</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(242,200,75,.60), rgba(23,24,27,.18));"></div>
+            <p>Nutty, aromatic, and balanced—bright banana with a toasted sesame finish.</p>
+          </div>
+
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🍋 Lemon</div><div class="tag">Classic</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(242,200,75,.80), rgba(255,255,255,.70));"></div>
+            <p>Crisp, clean citrus with a refined tartness. Perfect as a palate cleanser.</p>
+          </div>
+
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🍊 Mandarin</div><div class="tag">Citrus</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(242,106,61,.78), rgba(242,200,75,.55));"></div>
+            <p>Sunny mandarin flavor—bright and refreshing with a smooth finish.</p>
+          </div>
+
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🌟 Golden Milk</div><div class="tag">Spiced</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(242,200,75,.72), rgba(242,106,61,.30));"></div>
+            <p>Warm spice notes (think turmeric + cozy aromatics) with a silky profile.</p>
+          </div>
+
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🥥 Lychee Coconut</div><div class="tag">Tropical</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(255,255,255,.75), rgba(109,74,230,.22));"></div>
+            <p>Delicate lychee sweetness with creamy coconut vibes—bright but not heavy.</p>
+          </div>
+
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🍠 Candied Yam</div><div class="tag">Seasonal</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(242,106,61,.46), rgba(233,75,90,.22));"></div>
+            <p>Comforting and unique—sweet yam depth with a polished finish.</p>
+          </div>
+
+          <div class="panel card">
+            <div class="rowTop"><div class="name">🍐 Pear Vanilla</div><div class="tag">Elegant</div></div>
+            <div class="swatch" style="background:linear-gradient(90deg, rgba(242,200,75,.44), rgba(255,255,255,.80));"></div>
+            <p>Soft pear brightness with clean vanilla aromatics—simple, premium, addictive.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- VOTE -->
+      <section id="vote" aria-label="Vote for next month">
+        <div class="sectionHead">
+          <div>
+            <h2>Your vote counts</h2>
+            <p class="sub">
+              We're adding in new flavors next month. Tap one (or a few) below—this is a demo UI you can connect to a form later.
+            </p>
+          </div>
+          <a class="btn" href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">Comment your vote on IG</a>
+        </div>
+
+        <div class="panel card">
+          <form id="voteForm">
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="vote" value="Persimmon Brown Sugar" /> Persimmon Brown Sugar</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Pomegranate Mint" /> Pomegranate Mint</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Pistachio" /> Pistachio</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Horchata" /> Horchata</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Fig Balsamic Cinnamon" /> Fig Balsamic Cinnamon</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Mexican Hot Chocolate" /> Mexican Hot Chocolate</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Jamaican Carrot Coconut Ginger Punch" /> Jamaican Carrot Coconut Ginger Punch</label>
+              <label class="chip"><input type="checkbox" name="vote" value="Apple Cider" /> Apple Cider</label>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; align-items:center; justify-content:space-between;">
+              <div class="small">Demo only — connect to Google Forms, Mailchimp, or your site backend.</div>
+              <button class="btn primary" type="submit"><span class="dot" aria-hidden="true"></span>Submit vote</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- CATERING -->
+      <section id="catering" aria-label="Catering">
+        <div class="sectionHead">
+          <div>
+            <h2>Catering & event booking</h2>
+            <p class="sub">Perfect for businesses, private events, and community gatherings. We’ll bring a curated seasonal menu and handle service.</p>
+          </div>
+        </div>
+
+        <div class="panel card">
+          <div style="display:grid; gap:12px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="tag">Business catering</span>
+              <span class="tag">Private parties</span>
+              <span class="tag">Community events</span>
+              <span class="tag">Festivals / pop-ups</span>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn primary" href="#contact"><span class="dot" aria-hidden="true"></span>Request a quote</a>
+              <a class="btn" href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">DM us on Instagram</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EVENTS -->
+      <section id="events" aria-label="Events">
+        <div class="sectionHead">
+          <div>
+            <h2>Find us</h2>
+            <p class="sub">Add real listings here (or connect to a calendar feed). This keeps the UI clean and “market-friendly.”</p>
+          </div>
+        </div>
+
+        <div class="panel card">
+          <div style="display:grid; gap:10px;">
+            <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+              <strong>Upcoming pop-ups</strong>
+              <span class="tag">Update weekly</span>
+            </div>
+            <p style="margin:0; color:rgba(23,24,27,.72);">
+              Downtown Farmers Market • Community Festival • Seasonal Pop-up Series
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALLERY -->
+      <section id="gallery" aria-label="Gallery">
+        <div class="sectionHead">
+          <div>
+            <h2>From our Instagram</h2>
+            <p class="sub">A calm, premium visual strip—perfect for showcasing ingredients and seasonal vibes.</p>
+          </div>
+          <a class="btn" href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">@bcsicys</a>
+        </div>
+
+        <div class="gallery" aria-label="Instagram photo gallery">
+          <div class="galleryItem">
+            <img src="assets/photo-5.jpg" alt="BC's ICYs ingredient photo" />
+            <div class="cap">Fresh, seasonal ingredients</div>
+          </div>
+          <div class="galleryItem">
+            <img src="assets/photo-6.jpg" alt="BC's ICYs ingredient photo" />
+            <div class="cap">Chef-driven flavor ideas</div>
+          </div>
+          <div class="galleryItem">
+            <img src="assets/photo-7.jpg" alt="BC's ICYs ingredient photo" />
+            <div class="cap">Bright, refined palettes</div>
+          </div>
+          <div class="galleryItem">
+            <img src="assets/photo-8.jpg" alt="BC's ICYs ingredient photo" />
+            <div class="cap">Community + craft</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" aria-label="Contact">
+        <div class="sectionHead">
+          <div>
+            <h2>Contact</h2>
+            <p class="sub">For catering requests, pop-up invitations, and general questions.</p>
+          </div>
+        </div>
+
+        <div class="panel card">
+          <form id="contactForm">
+            <div style="display:grid; gap:12px;">
+              <label>
+                Name
+                <input required type="text" placeholder="Your name" />
+              </label>
+
+              <label>
+                Email
+                <input required type="email" placeholder="you@email.com" />
+              </label>
+
+              <label>
+                Message
+                <textarea required rows="4" placeholder="Tell us about your event, date, location, and estimated guest count…"></textarea>
+              </label>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+                <div class="small">
+                  Prefer IG DM? <a href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer" style="text-decoration:underline;">@bcsicys</a>
+                </div>
+                <button class="btn primary" type="submit"><span class="dot" aria-hidden="true"></span>Send message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <footer aria-label="Footer">
+        <div class="panel card" style="padding:18px;">
+          <div class="footerGrid">
+            <div>
+              <div class="brandTitle" style="font-size:20px;">BC's ICYs</div>
+              <div class="small" style="margin-top:6px;">Locally made artisanal Italian ices • non-dairy • low-sugar</div>
+              <div class="small" style="margin-top:10px;">© <span id="year"></span> BC's ICYs. All rights reserved.</div>
+            </div>
+
+            <div>
+              <div style="font-weight:900; margin-bottom:8px;">Explore</div>
+              <div style="display:grid; gap:8px;">
+                <a href="#flavors">Flavors</a>
+                <a href="#vote">Vote</a>
+                <a href="#gallery">Gallery</a>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-weight:900; margin-bottom:8px;">Social</div>
+              <div style="display:grid; gap:8px;">
+                <a href="https://instagram.com/bcsicys" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="#contact">Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu toggle (class-based, more robust than inline display)
+    const toggle = document.querySelector('.menu-toggle');
+    const drawer = document.getElementById('mobile-drawer');
+
+    if (toggle && drawer) {
+      toggle.addEventListener('click', () => {
+        const open = drawer.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+
+      drawer.querySelectorAll('a').forEach(a =>
+        a.addEventListener('click', () => {
+          drawer.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        })
+      );
+    }
+
+    // Demo vote + contact handlers
+    document.getElementById('voteForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("Thanks! Demo vote captured. Hook this up to a form or your backend when ready.");
+    });
+
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("Thanks! Demo message sent. Wire this to email/CRM when ready.");
+    });
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
